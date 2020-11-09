@@ -1,18 +1,19 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
-var indexRouter = require('./routes/index');
-var pollingRouter = require('./routes/polling');
-var longpollingRouter = require('./routes/longpolling');
-var sseRouter = require('./routes/sse');
-var websocketRouter = require('./routes/websocket');
+const app = express();
+const server = require('http').Server(app);
 
-var app = express();
-var server = require('http').Server(app);
-var expressWs = require('express-ws')(app,server);
+require('express-ws')(app, server);
+
+const indexRouter = require('./routes/index');
+const pollingRouter = require('./routes/polling');
+const longpollingRouter = require('./routes/longpolling');
+const sseRouter = require('./routes/sse');
+const websocketRouter = require('./routes/websocket');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -30,15 +31,13 @@ app.use('/longpolling', longpollingRouter);
 app.use('/sse', sseRouter);
 app.use('/websocket', websocketRouter);
 
-
-
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -48,4 +47,4 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = {app: app,server: server};
+module.exports = { app, server };
