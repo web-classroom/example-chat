@@ -8,7 +8,7 @@ expressWs(router);
 const chat = new EventEmitter();
 
 /* user page */
-router.get('/:user', (req, res) => {
+router.get('/:user/', (req, res) => {
   res.render('websocket', { user: req.params.user });
 });
 

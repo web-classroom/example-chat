@@ -5,7 +5,7 @@ const router = express.Router();
 const chat = new EventEmitter();
 
 /* user page */
-router.get('/:user', (req, res) => {
+router.get('/:user/', (req, res) => {
   res.render('longpolling', { user: req.params.user });
 });
 

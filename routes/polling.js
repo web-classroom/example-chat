@@ -5,7 +5,7 @@ const router = express.Router();
 const inboxes = new Map();
 
 /* user page */
-router.get('/:user', (req, res) => {
+router.get('/:user/', (req, res) => {
   res.render('polling', { user: req.params.user });
 });
 
